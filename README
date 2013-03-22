@@ -14,6 +14,6 @@ https://github.com/dart-lang/benchmark_harness
 
 Some numbers on my slow laptop...
 
-Dart 0.4.2.8_r20259   5.0 - 5.5 ms
-Java 1.6              3.8 - 4.9 ms
-gcc                   1 - 1.1 ms
+Dart VM 0.4.2.8_r20259   5.0 - 5.5 ms
+Java 1.6                 3.8 - 4.9 ms
+gcc                      1.0 - 1.1 ms
