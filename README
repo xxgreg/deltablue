@@ -3,7 +3,9 @@ Original (Buggy) benchmark.
 
 http://labs.oracle.com/people/mario/java_benchmarking/index.html
 
-Updated benchmark.
+Updated faster java benchmark.
 
 https://community.cablelabs.com/svn/OCAPRI/tags/RI-I1_1_1-REL-A/ri/ODLSrc/OCAP-1.0/jvm/Sun/src/share/javavm/test/COM/sun/labs/kanban/DeltaBlue/DeltaBlue.java
 
+C Benchmark (And the original slow Java version, plus a few others)
+http://www.cl.cam.ac.uk/~mr10/Bench.html
