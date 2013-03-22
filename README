@@ -17,3 +17,15 @@ Some numbers on my slow laptop...
 Dart VM 0.4.2.8_r20259   5.0 - 5.5 ms
 Java 1.6                 3.8 - 4.9 ms
 gcc                      1.0 - 1.1 ms
+
+
+Benchmark round 2.
+
+Increasing to 100,000 iterations, and changed Java code to use generic ArrayLists.
+
+Somebody tell me what I'm doing wrong these results are hard to believe.
+
+GCC -O3                    0.41 ms
+Java 1.6                   0.49 ms
+Dart VM 0.4.2.8_r20259     0.53 ms
+GCC                        1.00 ms

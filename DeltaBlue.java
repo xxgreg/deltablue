@@ -891,7 +891,7 @@ public class DeltaBlue /* implements Benchmark */ {
   public void inst_main(String args[])
   {
     System.out.println("DeltaBlue benchmark starting...");
-    int iterations= 100;
+    int iterations= 100000;
     long startTime= System.currentTimeMillis();
     for (int j= 0; j < iterations; ++j) {
       chainTest(100);
