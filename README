@@ -8,24 +8,32 @@ https://community.cablelabs.com/svn/OCAPRI/tags/RI-I1_1_1-REL-A/ri/ODLSrc/OCAP-1
 C Benchmark (And the original slow Java version, plus a few others)
 http://www.cl.cam.ac.uk/~mr10/Bench.html
 
-Dart benckmark
+Dart benchmark (Change # iterations in benchmark_base)
 https://github.com/dart-lang/benchmark_harness
 
 
 Some numbers on my slow laptop...
 
-Dart VM 0.4.2.8_r20259   5.0 - 5.5 ms
-Java 1.6                 3.8 - 4.9 ms
-gcc                      1.0 - 1.1 ms
+Times are per-iteration.
 
+100 Iterations:
+GCC -O3                        0.40 ms
+Dart VM 0.4.2.8_r20259         0.54 ms
+GCC                             1.0 ms
+V8 Shell 3.17                   1.2 ms
+Java 1.6                  2.8 - 3.2 ms
 
-Benchmark round 2.
+1000 Iterations:
+GCC -O3                       0.40 ms
+Dart VM 0.4.2.8_r20259        0.52 ms
+V8 Shell 3.17                 0.72 ms
+Java 1.6               0.87 - 0.92 ms
+GCC                           1.00 ms
 
-Increasing to 100,000 iterations, and changed Java code to use generic ArrayLists.
+100,000 iterations:
+GCC -O3                       0.41 ms
+Java 1.6                      0.49 ms
+Dart VM 0.4.2.8_r20259        0.53 ms
+V8 Shell 3.17                 0.66 ms
+GCC                           1.00 ms
 
-Somebody tell me what I'm doing wrong these results are hard to believe.
-
-GCC -O3                    0.41 ms
-Java 1.6                   0.49 ms
-Dart VM 0.4.2.8_r20259     0.53 ms
-GCC                        1.00 ms

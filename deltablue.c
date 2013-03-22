@@ -1098,7 +1098,7 @@ void ProjectionTest(int n)
 
 int main(void)
 {
-  const int iterations= 100000;
+  const int iterations= 1000;
   int n= 100, j;
   long msecs;
   
