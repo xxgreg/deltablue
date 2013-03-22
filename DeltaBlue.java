@@ -139,7 +139,7 @@ class Strength {
 class Variable {
 
   public int value;               // my value; changed by constraints
-  public Vector constraints;      // normal constraints that reference me
+  public Vector<Constraint> constraints;      // normal constraints that reference me
   public Constraint determinedBy; // the constraint that currently determines
                                   // my value (or null if there isn't one)
   public int mark;                // used by the planner to mark constraints
@@ -152,7 +152,7 @@ class Variable {
 		   int nconstraints)
   {
     value= initialValue;
-    constraints= new Vector(nconstraints);
+    constraints= new Vector<Constraint>(nconstraints);
     determinedBy= null;
     mark= 0;
     this.walkStrength= walkStrength;
@@ -649,21 +649,21 @@ class ScaleConstraint extends BinaryConstraint {
 
 class Plan {
 
-  private Vector v;
+  private Vector<Constraint> v;
 
-  public Plan() { v= new Vector(); }
+  public Plan() { v= new Vector<Constraint>(); }
 
   public void addConstraint(Constraint c) { v.addElement(c); }
 
   public int size() { return v.size(); }
 
   public Constraint constraintAt(int index) {
-    return (Constraint) v.elementAt(index); }
+    return v.elementAt(index); }
 
   public void execute()
   {
     for (int i= 0; i < size(); ++i) {
-      Constraint c= (Constraint) constraintAt(i);
+      Constraint c= constraintAt(i);
       c.execute();
     }
   }
@@ -725,11 +725,11 @@ class Planner {
     Variable out= c.output();
     c.markUnsatisfied();
     c.removeFromGraph();
-    Vector unsatisfied= removePropagateFrom(out);
+    Vector<Constraint> unsatisfied= removePropagateFrom(out);
     Strength strength= Strength.required;
     do {
       for (int i= 0; i < unsatisfied.size(); ++i) {
-	Constraint u= (Constraint)unsatisfied.elementAt(i);
+	Constraint u= unsatisfied.elementAt(i);
 	if (u.strength == strength)
 	  incrementalAdd(u);
       }
@@ -751,10 +751,10 @@ class Planner {
   //
   public boolean addPropagate(Constraint c, int mark)
   {
-    Vector todo= new Vector();
+    Vector<Constraint> todo= new Vector<Constraint>();
     todo.addElement(c);
     while (!todo.isEmpty()) {
-      Constraint d= (Constraint)todo.elementAt(0);
+      Constraint d= todo.elementAt(0);
       todo.removeElementAt(0);
       if (d.output().mark == mark) {
 	incrementalRemove(c);
@@ -770,10 +770,10 @@ class Planner {
   // The given variable has changed. Propagate new values downstream.
   public void propagateFrom(Variable v)
   {
-    Vector todo= new Vector();
+    Vector<Constraint> todo= new Vector<Constraint>();
     addConstraintsConsumingTo(v, todo);
     while (!todo.isEmpty()) {
-      Constraint c= (Constraint)todo.elementAt(0);
+      Constraint c= todo.elementAt(0);
       todo.removeElementAt(0);
       c.execute();
       addConstraintsConsumingTo(c.output(), todo);
@@ -784,25 +784,25 @@ class Planner {
   // downstream of the given constraint. Answer a collection of
   // unsatisfied constraints sorted in order of decreasing strength.
   //
-  protected Vector removePropagateFrom(Variable out)
+  protected Vector<Constraint> removePropagateFrom(Variable out)
   {
     out.determinedBy= null;
     out.walkStrength= Strength.weakest;
     out.stay= true;
-    Vector unsatisfied= new Vector();
-    Vector todo= new Vector();
+    Vector<Constraint> unsatisfied= new Vector<Constraint>();
+    Vector<Variable> todo= new Vector<Variable>();
     todo.addElement(out);
     while (!todo.isEmpty()) {
-      Variable v= (Variable)todo.elementAt(0);
+      Variable v= todo.elementAt(0);
       todo.removeElementAt(0);
       for (int i= 0; i < v.constraints.size(); ++i) {
-	Constraint c= (Constraint) v.constraints.elementAt(i);
+	Constraint c= v.constraints.elementAt(i);
 	if (!c.isSatisfied())
 	  unsatisfied.addElement(c);
       }
       Constraint determiningC= v.determinedBy;
       for (int i= 0; i < v.constraints.size(); ++i) {
-	Constraint nextC= (Constraint) v.constraints.elementAt(i);
+	Constraint nextC= v.constraints.elementAt(i);
 	if (nextC != determiningC && nextC.isSatisfied()) {
 	  nextC.recalculate();
 	  todo.addElement(nextC.output());
@@ -815,11 +815,11 @@ class Planner {
   // Extract a plan for resatisfaction starting from the outputs of
   // the given constraints, usually a set of input constraints.
   //
-  protected Plan extractPlanFromConstraints(Vector constraints)
+  protected Plan extractPlanFromConstraints(Vector<Constraint> constraints)
   {
-    Vector sources= new Vector();
+    Vector<Constraint> sources= new Vector<Constraint>();
     for (int i= 0; i < constraints.size(); ++i) {
-      Constraint c= (Constraint)constraints.elementAt(i);
+      Constraint c= constraints.elementAt(i);
       if (c.isInput() && c.isSatisfied())
 	sources.addElement(c);
     }
@@ -844,13 +844,13 @@ class Planner {
   // any constraint.
   // Assume: sources are all satisfied.
   //
-  protected Plan makePlan(Vector sources)
+  protected Plan makePlan(Vector<Constraint> sources)
   {
     int mark= newMark();
     Plan plan= new Plan();
-    Vector todo= sources;
+    Vector<Constraint> todo= sources;
     while (!todo.isEmpty()) {
-      Constraint c= (Constraint)todo.elementAt(0);
+      Constraint c= todo.elementAt(0);
       todo.removeElementAt(0);
       if (c.output().mark != mark && c.inputsKnown(mark)) {
 	// not in plan already and eligible for inclusion
@@ -862,12 +862,12 @@ class Planner {
     return plan;
   }
 
-  protected void addConstraintsConsumingTo(Variable v, Vector coll)
+  protected void addConstraintsConsumingTo(Variable v, Vector<Constraint> coll)
   {
     Constraint determiningC= v.determinedBy;
-    Vector cc= v.constraints;
+    Vector<Constraint> cc= v.constraints;
     for (int i= 0; i < cc.size(); ++i) {
-      Constraint c= (Constraint) cc.elementAt(i);
+      Constraint c= cc.elementAt(i);
       if (c != determiningC && c.isSatisfied())
 	coll.addElement(c);
     }
@@ -941,7 +941,7 @@ public class DeltaBlue /* implements Benchmark */ {
 
     new StayConstraint(last, Strength.strongDefault);
     Constraint editC= new EditConstraint(first, Strength.preferred);
-    Vector editV= new Vector();
+    Vector<Constraint> editV= new Vector<Constraint>();
     editV.addElement(editC);
     Plan plan= planner.extractPlanFromConstraints(editV);
     for (int i= 0; i < 100; i++) {
@@ -967,7 +967,7 @@ public class DeltaBlue /* implements Benchmark */ {
     Variable offset= new Variable("offset", 1000);
     Variable src= null, dst= null;
 
-    Vector dests= new Vector();
+    Vector<Variable> dests= new Vector<Variable>();
 
     for (int i= 0; i < n; ++i) {
       src= new Variable("src" + Integer.toString(i), i);
@@ -985,13 +985,13 @@ public class DeltaBlue /* implements Benchmark */ {
 
     change(scale, 5);
     for (int i= 0; i < n - 1; ++i) {
-      if (((Variable)dests.elementAt(i)).value != i * 5 + 1000)
+      if ((dests.elementAt(i)).value != i * 5 + 1000)
 	error("Projection test 3 failed!");
     }
 
     change(offset, 2000);
     for (int i= 0; i < n - 1; ++i) {
-      if (((Variable)dests.elementAt(i)).value != i * 5 + 2000)
+      if ((dests.elementAt(i)).value != i * 5 + 2000)
 	error("Projection test 4 failed!");
     }
   }
@@ -999,7 +999,7 @@ public class DeltaBlue /* implements Benchmark */ {
   private void change(Variable var, int newValue)
   {
     EditConstraint editC= new EditConstraint(var, Strength.preferred);
-    Vector editV= new Vector();
+    Vector<Constraint> editV= new Vector<Constraint>();
     editV.addElement(editC);
     Plan plan= planner.extractPlanFromConstraints(editV);
     for (int i= 0; i < 10; i++) {
