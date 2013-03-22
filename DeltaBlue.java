@@ -890,8 +890,15 @@ public class DeltaBlue /* implements Benchmark */ {
 
   public void inst_main(String args[])
   {
-    System.out.println("DeltaBlue benchmark starting...");
     int iterations= 1000;
+    String options = "";
+
+    if (args != null && args.length > 1)
+      iterations = Integer.parseInt(args[1]);
+
+    if (args != null && args.length > 2)
+      options = args[2];
+
     long startTime= System.currentTimeMillis();
     for (int j= 0; j < iterations; ++j) {
       chainTest(100);
@@ -899,12 +906,7 @@ public class DeltaBlue /* implements Benchmark */ {
     }
     long endTime= System.currentTimeMillis();
     total_ms= endTime - startTime;
-    System.out.println("Total time for " + iterations
-		       + " iterations of chain and projection tests: "
-		       + total_ms + " ms");
-    System.out.println("Average time per iteration: "
-		       + ((double)total_ms / iterations) + " ms");
-
+    System.out.println("DeltaBlue\tJava\t" + options + "\t" + iterations + "x\t" + ((double)total_ms / iterations) + " ms");
   }
 
 

@@ -879,10 +879,26 @@ function deltaBlue() {
     projectionTest(100);
 }
 
-var start = new Date();
-var iter = 1000;
-for (var asds = 0; asds < iter; asds++) {
-  deltaBlue();
+function main(args) {
+  var iterations = 1000;
+  var options = '';
+
+  if (args && args.length > 0) {
+    iterations = parseInt(args[0]);
+    if (isNaN(iterations))
+      iterations = 1000;
+  }
+
+  if (args && args.length > 1)
+    options = args[1];
+
+  var start = new Date();
+  for (var i = 0; i < iterations; i++) {
+    deltaBlue();
+  }
+  var end = new Date();
+
+  print("DeltaBlue\td8\t" + options + "\t" + iterations + "x\t" + ((end.getTime() - start.getTime()) / iterations) + "ms");
 }
-var end = new Date();
-print((end.getTime() - start.getTime()) / iter);
+
+main(arguments);

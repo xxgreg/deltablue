@@ -1096,9 +1096,21 @@ void ProjectionTest(int n)
   List_Destroy(dests);
 }
 
-int main(void)
-{
-  const int iterations= 1000;
+int main(int argc, char* argv[])
+{  
+  int iterations= 1000;
+  char options_array[100];
+  char* options = options_array; // I don't do c :(
+
+  if (argc > 1)
+    iterations = atoi(argv[1]);
+
+  if (iterations < 1)
+    iterations= 1000;
+
+  if (argc > 2)
+    options = argv[2];
+
   int n= 100, j;
   long msecs;
   
@@ -1107,9 +1119,8 @@ int main(void)
     ChainTest(n);
     ProjectionTest(n);
   }
+
   Finish(&msecs);
-  printf("Total time for %d iterations of chain and projection tests: %ld ms\n",
-	 iterations, msecs);
-  printf("Average time per iteration: %g ms\n", (double)msecs / iterations);
+  printf("DeltaBlue\tC\t%s\t%dx\t%gms\n", options, iterations, (double)msecs / iterations);
   
 }
