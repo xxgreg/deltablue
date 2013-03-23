@@ -32,6 +32,17 @@ Using a script snapshot had no measurable impact on start up time. This
 probably reflects the small size of the benchmark, which doesn't use much, if
 any (excluding List) of the standard library code.
 
+At a wild guess, I'd say the start up time difference is due to Dart having a
+larger standard library, thus a larger initial snapshot, which takes a little
+longer to copy into memory. For usage in browsers, this 20ms headstart is
+likely irrelevant as the VM can be already be started before the first code is
+received.
+
+It would be nice to see some start up benchmarks using larger applications, so
+that improved start up time vs V8, can be evaluated. Perhaps using a large Dart
+application, built with dart2js, running on V8, and comparing against the start
+up time on the Dart VM is the way to go?
+
 
 
 java version "1.6.0_26"
