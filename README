@@ -8,32 +8,57 @@ https://community.cablelabs.com/svn/OCAPRI/tags/RI-I1_1_1-REL-A/ri/ODLSrc/OCAP-1
 C Benchmark (And the original slow Java version, plus a few others)
 http://www.cl.cam.ac.uk/~mr10/Bench.html
 
-Dart benchmark (Change # iterations in benchmark_base)
+Dart benchmark
 https://github.com/dart-lang/benchmark_harness
 
 
-Some numbers on my slow laptop...
+Results, allowing enough iterations for the VM's to warm up.
+gcc -O3   1x
+java      1.2x
+DartVM    1.3x
+d8        1.6x
+gcc       2.5x
 
-Times are per-iteration.
 
-100 Iterations:
-GCC -O3                        0.40 ms
-Dart VM 0.4.2.8_r20259         0.54 ms
-GCC                             1.0 ms
-V8 Shell 3.17                   1.2 ms
-Java 1.6                  2.8 - 3.2 ms
+Comments:
 
-1000 Iterations:
-GCC -O3                       0.40 ms
-Dart VM 0.4.2.8_r20259        0.52 ms
-V8 Shell 3.17                 0.72 ms
-Java 1.6               0.87 - 0.92 ms
-GCC                           1.00 ms
+The DartVM uses more memory than V8, and less than the JVM. The DartVM and V8
+start up faster than the JVM (Not much of a surprise there). Snapshots didn't
+affect the startup speed of the DartVM. Probably too little code in this
+benchmark to be a measurable benefit.
 
-100,000 iterations:
-GCC -O3                       0.41 ms
-Java 1.6                      0.49 ms
-Dart VM 0.4.2.8_r20259        0.53 ms
-V8 Shell 3.17                 0.66 ms
-GCC                           1.00 ms
 
+java version "1.6.0_26"
+gcc version 4.6.3 (Ubuntu/Linaro 4.6.3-1ubuntu5) 
+V8 version 3.17.15.1
+Dart VM version: 0.4.2.8_r20259 (Tue Mar 19 23:33:54 2013)
+
+DeltaBlue	Java		10x	9.3 ms
+DeltaBlue	Java		100x	2.96 ms
+DeltaBlue	Java		1000x	0.898 ms
+DeltaBlue	Java		10000x	0.5229 ms
+DeltaBlue	Java		100000x	0.48908 ms
+
+DeltaBlue	C	gcc	10x	0ms
+DeltaBlue	C	gcc	100x	1ms
+DeltaBlue	C	gcc	1000x	0.98ms
+DeltaBlue	C	gcc	10000x	0.993ms
+DeltaBlue	C	gcc	100000x	0.9927ms
+
+DeltaBlue	C	gcc -O3	10x	0ms
+DeltaBlue	C	gcc -O3	100x	0.4ms
+DeltaBlue	C	gcc -O3	1000x	0.39ms
+DeltaBlue	C	gcc -O3	10000x	0.416ms
+DeltaBlue	C	gcc -O3	100000x	0.3936ms
+
+DeltaBlue	d8		10x	4.1ms
+DeltaBlue	d8		100x	1.16ms
+DeltaBlue	d8		1000x	0.729ms
+DeltaBlue	d8		10000x	0.6636ms
+DeltaBlue	d8		100000x	0.65464ms
+
+DeltaBlue	Dart		10x	5.9ms
+DeltaBlue	Dart		100x	1.24ms
+DeltaBlue	Dart		1000x	0.636ms
+DeltaBlue	Dart		10000x	0.536ms
+DeltaBlue	Dart		100000x	0.55263ms
