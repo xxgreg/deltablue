@@ -14,18 +14,24 @@ https://github.com/dart-lang/benchmark_harness
 
 Results, allowing enough iterations for the VM's to warm up.
 gcc -O3   1x
-java      1.2x
+JVM       1.2x
 DartVM    1.3x
-d8        1.6x
+V8        1.6x
 gcc       2.5x
 
 
-Comments:
+Comments on other aspects of the benchmark:
 
-The DartVM uses more memory than V8, and less than the JVM. The DartVM and V8
-start up faster than the JVM (Not much of a surprise there). Snapshots didn't
-affect the startup speed of the DartVM. Probably too little code in this
-benchmark to be a measurable benefit.
+The DartVM uses more memory than V8, and less than the JVM. Dart and V8 start
+up faster than the JVM (Not much of a surprise there). However interestingly,
+V8 appears to startup measurably faster than the DartVM. When testing a single
+iteration, V8 consistently takes ~10ms to start the benchmark, and ~20ms to
+execute it, versus Dart, which takes ~30ms to start, and also ~20 to execute.
+
+Using a script snapshot had no measurable impact on start up time. This
+probably reflects the small size of the benchmark, which doesn't use much, if
+any (excluding List) of the standard library code.
+
 
 
 java version "1.6.0_26"
