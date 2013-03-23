@@ -893,11 +893,11 @@ public class DeltaBlue /* implements Benchmark */ {
     int iterations= 1000;
     String options = "";
 
-    if (args != null && args.length > 1)
-      iterations = Integer.parseInt(args[1]);
+    if (args != null && args.length > 0)
+      iterations = Integer.parseInt(args[0]);
 
-    if (args != null && args.length > 2)
-      options = args[2];
+    if (args != null && args.length > 1)
+      options = args[1];
 
     long startTime= System.currentTimeMillis();
     for (int j= 0; j < iterations; ++j) {
