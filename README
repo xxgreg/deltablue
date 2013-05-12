@@ -1,3 +1,8 @@
+Update:
+With more recent versions of the DartVM it is now just ahead of the JVM on my laptop.
+I've seen a report showing the JVM running at 1.1x of optimized C, and faster of the DartVM, but I am unable to reproduce this result.
+Please have a go at running this benchmark yourself (see run.sh), and post the results as an issue.
+
 
 Original (Buggy) benchmark.
 http://labs.oracle.com/people/mario/java_benchmarking/index.html
