@@ -1,3 +1,85 @@
+Update October 2014
+
+After 2 years of hard work from the Dart team, Dart is now comfortably ahead of JVM and V8.
+
+Here are the raw results. (Thanks for running this Rob).
+
+java version "1.7.0_65"
+OpenJDK Runtime Environment (IcedTea 2.5.2) (7u65-2.5.2-3~14.04)
+OpenJDK 64-Bit Server VM (build 24.65-b04, mixed mode)
+Using built-in specs.
+COLLECT_GCC=gcc
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/4.8/lto-wrapper
+Target: x86_64-linux-gnu
+Configured with: ../src/configure -v --with-pkgversion='Ubuntu 4.8.2-19ubuntu1' --with-bugurl=file:///usr/share/doc/gcc-4.8/README.Bugs --enable-languages=c,c++,java,go,d,fortran,objc,obj-c++ --prefix=/usr --program-suffix=-4.8 --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --with-gxx-include-dir=/usr/include/c++/4.8 --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --enable-gnu-unique-object --disable-libmudflap --enable-plugin --with-system-zlib --disable-browser-plugin --enable-java-awt=gtk --enable-gtk-cairo --with-java-home=/usr/lib/jvm/java-1.5.0-gcj-4.8-amd64/jre --enable-java-home --with-jvm-root-dir=/usr/lib/jvm/java-1.5.0-gcj-4.8-amd64 --with-jvm-jar-dir=/usr/lib/jvm-exports/java-1.5.0-gcj-4.8-amd64 --with-arch-directory=amd64 --with-ecj-jar=/usr/share/java/eclipse-ecj.jar --enable-objc-gc --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --with-tune=generic --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
+Thread model: posix
+gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1) 
+V8 version 3.30.8 [console: dumb]
+d8> 
+Dart VM version: 1.7.0-dev.4.5 (Thu Oct  9 06:28:13 2014) on "linux_x64"
+DeltaBlue   Java        10x 6.4 ms
+java DeltaBlue 10 secs 0.15, mem 28492, cpu 128%
+DeltaBlue   Java        100x    1.61 ms
+java DeltaBlue 100 secs 0.25, mem 43052, cpu 171%
+DeltaBlue   Java        1000x   0.44 ms
+java DeltaBlue 1000 secs 0.51, mem 68668, cpu 177%
+DeltaBlue   Java        10000x  0.2619 ms
+java DeltaBlue 10000 secs 2.70, mem 258788, cpu 114%
+DeltaBlue   Java        100000x 0.24715 ms
+java DeltaBlue 100000 secs 24.79, mem 259948, cpu 103%
+DeltaBlue   C   gcc 10x 0.7ms
+Command exited with non-zero status 26
+./deltablue 10 gcc secs 0.00, mem 648, cpu 100%
+DeltaBlue   C   gcc 100x    0.52ms
+Command exited with non-zero status 28
+./deltablue 100 gcc secs 0.05, mem 648, cpu 100%
+DeltaBlue   C   gcc 1000x   0.494ms
+Command exited with non-zero status 30
+./deltablue 1000 gcc secs 0.49, mem 656, cpu 100%
+DeltaBlue   C   gcc 10000x  0.4948ms
+Command exited with non-zero status 32
+./deltablue 10000 gcc secs 4.95, mem 656, cpu 99%
+DeltaBlue   C   gcc 100000x 0.49121ms
+Command exited with non-zero status 34
+./deltablue 100000 gcc secs 49.13, mem 652, cpu 99%
+DeltaBlue   C   gcc -O3 10x 0.2ms
+Command exited with non-zero status 30
+./deltablue-o3 10 gcc -O3 secs 0.00, mem 656, cpu 100%
+DeltaBlue   C   gcc -O3 100x    0.26ms
+Command exited with non-zero status 32
+./deltablue-o3 100 gcc -O3 secs 0.02, mem 652, cpu 100%
+DeltaBlue   C   gcc -O3 1000x   0.229ms
+Command exited with non-zero status 34
+./deltablue-o3 1000 gcc -O3 secs 0.22, mem 660, cpu 100%
+DeltaBlue   C   gcc -O3 10000x  0.2273ms
+Command exited with non-zero status 36
+./deltablue-o3 10000 gcc -O3 secs 2.27, mem 656, cpu 99%
+DeltaBlue   C   gcc -O3 100000x 0.23264ms
+Command exited with non-zero status 38
+./deltablue-o3 100000 gcc -O3 secs 23.27, mem 660, cpu 99%
+DeltaBlue   d8      10x 3.7ms
+./d8 deltablue.js -- 10 secs 0.05, mem 16104, cpu 158%
+DeltaBlue   d8      100x    0.7ms
+./d8 deltablue.js -- 100 secs 0.08, mem 17212, cpu 157%
+DeltaBlue   d8      1000x   0.254ms
+./d8 deltablue.js -- 1000 secs 0.26, mem 19904, cpu 121%
+DeltaBlue   d8      10000x  0.1949ms
+./d8 deltablue.js -- 10000 secs 1.96, mem 28036, cpu 102%
+DeltaBlue   d8      100000x 0.19622ms
+./d8 deltablue.js -- 100000 secs 19.63, mem 45864, cpu 100%
+DeltaBlue   Dart        10x 4.7ms
+dart DeltaBlue.dart 10 secs 0.10, mem 14904, cpu 100%
+DeltaBlue   Dart        100x    0.72ms
+dart DeltaBlue.dart 100 secs 0.13, mem 16228, cpu 100%
+DeltaBlue   Dart        1000x   0.199ms
+dart DeltaBlue.dart 1000 secs 0.26, mem 18308, cpu 101%
+DeltaBlue   Dart        10000x  0.1439ms
+dart DeltaBlue.dart 10000 secs 1.50, mem 16232, cpu 100%
+DeltaBlue   Dart        100000x 0.13733ms
+dart DeltaBlue.dart 100000 secs 13.79, mem 17820, cpu 100%
+
+
+
 Update - DartVM now beats JVM v1.8 see Nickolay's blog for details.
 http://bonovox.be/blog/?p=128
 
