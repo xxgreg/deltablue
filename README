@@ -1,6 +1,8 @@
 Update October 2014
 
-After 2 years of hard work from the Dart team, Dart is now comfortably ahead of JVM and V8.
+After 2 years of hard work from the Dart team, Dart is now comfortably ahead of OpenJDK and V8.
+
+Will also be interesting to test against the Oracle JVM.
 
 Here are the raw results. (Thanks for running this Rob).
 
