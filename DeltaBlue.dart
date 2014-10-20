@@ -37,12 +37,10 @@
 import 'dart:io';
 
 //Greg: Not using the dart benchmark harness, so I can observe warm up behaviour.
-main() {
+main(List<String> args) {
   int iterations = 1000;
   var options = '';
 
-  var args = new Options().arguments;
-  
   if (args != null && !args.isEmpty) {
     iterations = int.parse(args[0], onError: (s) => iterations);
     if (args.length > 1)
