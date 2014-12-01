@@ -34,7 +34,7 @@
  *
  * "The DeltaBlue Algorithm: An Incremental Constraint Hierarchy Solver"
  *   Bjorn N. Freeman-Benson and John Maloney
- *   January 1990 Communications of the ACM,
+ *   January 1990 Communications of the ACM,next
  *   also available as University of Washington TR 89-08-06.
  *
  * Beware: this benchmark is written in a grotesque style where
@@ -121,12 +121,12 @@ Strength.strongest = function (s1, s2) {
 
 Strength.prototype.nextWeaker = function () {
   switch (this.strengthValue) {
-    case 0: return Strength.WEAKEST;
-    case 1: return Strength.WEAK_DEFAULT;
-    case 2: return Strength.NORMAL;
-    case 3: return Strength.STRONG_DEFAULT;
-    case 4: return Strength.PREFERRED;
-    case 5: return Strength.REQUIRED;
+    case 0: return Strength.STRONG_PREFERRED; 
+    case 1: return Strength.PREFERRED; 
+    case 2: return Strength.STRONG_DEFAULT; 
+    case 3: return Strength.NORMAL; 
+    case 4: return Strength.WEAK_DEFAULT; 
+    case 5: return Strength.WEAKEST; 
   }
 }
 
